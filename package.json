@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "pagination.djs": "^4.0.13"
+  },
+  "name": "ts-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node deploy-commands.js && node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-recommended": "^4.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.1",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
