@@ -9,8 +9,9 @@ const commandFolders = fs.readdirSync(foldersPath)
 
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder)
-  const commandFiles = fs.readdirSync(commandsPath).filter((file) =>
-    file.endsWith('.js'))
+  const commandFiles = fs.readdirSync(commandsPath).filter(
+    (file) => file.endsWith('.js')
+  )
 
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file)
@@ -19,7 +20,7 @@ for (const folder of commandFolders) {
       commands.push(command.data.toJSON())
     } else {
       console.log(`[WARNING] The command at ${filePath} ` +
-                  'is missing a required "data" or "execute" property.')
+      'is missing a required "data" or "execute" properties')
     }
   }
 }
@@ -28,14 +29,19 @@ const rest = new REST().setToken(token);
 
 (async () => {
   try {
-    console.log(`Started refreshing ${commands.length}` +
-                'application (/) commands.')
+    console.log(
+    `Started refreshing ${commands.length} ` +
+    'application (/) commands.'
+    )
 
     const data = await rest.put(Routes.applicationCommands(clientId),
-      { body: commands })
+      { body: commands }
+    )
 
-    console.log(`Successfully reloaded ${data.length} ` +
-                'application (/) commands.')
+    console.log(
+     `Successfully reloaded ${data.length} ` +
+     'application (/) commands.'
+    )
   } catch (error) {
     console.error(error)
   }

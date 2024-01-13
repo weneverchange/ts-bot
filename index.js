@@ -3,7 +3,13 @@ const { token } = require('./config.json')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildPresences
+  ]
+})
 
 client.commands = new Collection()
 
@@ -12,8 +18,9 @@ const commandFolders = fs.readdirSync(foldersPath)
 
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder)
-  const commandFiles = fs.readdirSync(commandsPath).filter((file) =>
-    file.endsWith('.js'))
+  const commandFiles = fs.readdirSync(commandsPath).filter(
+    (file) => file.endsWith('.js')
+  )
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file)
     const command = require(filePath)
@@ -21,7 +28,7 @@ for (const folder of commandFolders) {
       client.commands.set(command.data.name, command)
     } else {
       console.log(`[WARNING] The command at ${filePath} ` +
-                  'is missing a required "data" or "execute" property.')
+      'is missing a required "data" or "execute" property.')
     }
   }
 }
@@ -41,14 +48,16 @@ client.on(Events.InteractionCreate, async (interaction) => {
     console.error(error)
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
-        content: 'There was an error while executing the command!',
+        content: 'There was an error ' +
+       'while executing the command!',
         ephemeral: true
       })
     }
   }
 })
 
-client.once(Events.ClientReady, (ready) =>
-  console.log(`Ready ${ready.user.tag}`))
+client.once(Events.ClientReady, (ready) => console.log(
+  `Ready ${ready.user.tag}`)
+)
 
 client.login(token)
