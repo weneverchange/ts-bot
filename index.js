@@ -34,8 +34,6 @@ for (const folder of commandFolders) {
 }
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand()) return
-
   const command = interaction.client.commands.get(interaction.commandName)
 
   if (!command) {
@@ -43,7 +41,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 
   try {
-    await command.execute(interaction)
+    if (interaction.isChatInputCommand()) {
+      await command.execute(interaction)
+    } else if (interaction.isAutocomplete()) {
+      await command.autocomplete(interaction)
+    }
   } catch (error) {
     console.error(error)
     if (interaction.replied || interaction.deferred) {
