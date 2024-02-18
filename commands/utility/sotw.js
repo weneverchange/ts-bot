@@ -122,6 +122,9 @@ module.exports = {
     const trackUri = interaction.options.getString('track')
     await interaction.deferReply()
     await interaction.deleteReply()
+    if (!trackUri) {
+      return
+    }
     await interaction.channel.send(`${!removeTimestamp ? timestamp : ''}\n${trackUri}`)
   }
 }
