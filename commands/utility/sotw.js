@@ -62,11 +62,12 @@ async function fetchWithRetry (url, options, maxRetries = 3) {
       options.headers = { Authorization: 'Bearer ' + token }
       const response = await fetch(url, options)
 
-      if (response.status === 401) {
+      if (response.status === 401 && retries < maxRetries - 1) {
         console.log('401. Retrying...')
         retries++
-        token = await getToken() // Get new token
-        await storeTokenIfNeeded(token)
+        const newToken = await getToken(token)
+        token = newToken.access_token
+        await storeTokenIfNeeded(newToken)
       } else {
         return response
       }
