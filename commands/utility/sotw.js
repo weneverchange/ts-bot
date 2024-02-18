@@ -111,7 +111,7 @@ module.exports = {
     }
     const tracksObject = await getTracks(track)
     const tracks = tracksObject?.tracks?.items?.map(
-      (i) => ({ name: i.name, value: i.external_urls.spotify })
+      (i) => ({ name: `${i.name}${i.artists && i.artists.length ? ' - ' + i.artists[0].name : ''}`, value: i.external_urls.spotify })
     )
     await interaction.respond(
       !tracks ? [{ name: 'Not found', value: '' }] : tracks
