@@ -202,7 +202,7 @@ module.exports = {
     )
     .addCondition(
       (options) => options.hasAuthorName
-        && options.authorUrl && options.HasAuthorUrl,
+        && options.hasAuthorUrl && options.hasAuthorIcon,
       (embed) => embed.setAuthor(
         { name: authorName, url: authorUrl, iconURL: authorIcon }
       )
