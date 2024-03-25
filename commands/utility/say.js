@@ -14,7 +14,7 @@ module.exports = {
   async execute (interaction) {
     let message = interaction.options.getString('message')
 
-    message = description.includes('\\n') ?
+    message = message.includes('\\n') ?
       message.split('\\n').join('\n') : message
     
     await interaction.deferReply()
