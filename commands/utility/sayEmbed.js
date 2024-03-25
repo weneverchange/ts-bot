@@ -126,7 +126,7 @@ module.exports = {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute(interaction) {
-    const description = interaction.options.getString('description')
+    let description = interaction.options.getString('description')
 
     const title = interaction.options.getString('title')
 
@@ -151,6 +151,9 @@ module.exports = {
     const authorIcon = interaction.options.getString('authoricon')
 
     const conditionalBuilder = new ConditionalBuilder()
+
+    description = description.includes('\\n') ?
+      description.split('\\n').join('\n') : description
 
     const resultEmbed = new EmbedBuilder()
       .setDescription(description)

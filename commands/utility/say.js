@@ -12,7 +12,10 @@ module.exports = {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute (interaction) {
-    const message = interaction.options.getString('message')
+    let message = interaction.options.getString('message')
+
+    message = description.includes('\\n') ?
+      message.split('\\n').join('\n') : message
     
     await interaction.deferReply()
     await interaction.deleteReply()
