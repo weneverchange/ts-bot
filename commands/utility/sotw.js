@@ -89,16 +89,18 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('sotw')
     .setDescription('Shows your selected song of the week.')
-    .addBooleanOption(option =>
-      option
-        .setName('remove_timestamp')
-        .setDescription('Remove timestamp from message')
-    )
     .addStringOption(option =>
       option
         .setName('track')
         .setDescription('Tracks name to be searched in Spotify')
         .setAutocomplete(true)
+        .setRequired(true)
+    )
+    .addBooleanOption(option =>
+      option
+        .setName('remove_timestamp')
+        .setDescription('Remove timestamp from message')
+        .setRequired(false)
     ),
   async autocomplete (interaction) {
     let track = await interaction.options.getFocused()
@@ -121,11 +123,10 @@ module.exports = {
     const removeTimestamp = interaction.options.getBoolean('remove_timestamp')
     const timestamp = time(new Date(), 'R')
     const trackUri = interaction.options.getString('track')
+    
     await interaction.deferReply()
     await interaction.deleteReply()
-    if (!trackUri) {
-      return
-    }
+    
     await interaction.channel.send(`${!removeTimestamp ? timestamp : ''}\n${trackUri}`)
   }
 }
